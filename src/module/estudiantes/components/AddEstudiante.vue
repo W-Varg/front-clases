@@ -2,7 +2,7 @@
 import { reactive, defineEmits } from 'vue'
 import axios from 'axios'
 
-const emit = defineEmits(['event-nuevo-estudiante'])
+const emit = defineEmits(['event-nuevo-estudiante', 'cerrar-formulario'])
 const props = defineProps({
   valorQueRecibo: { type: Boolean, required: true },
   apellidoQueRecibo: { type: String, required: true },
@@ -32,6 +32,7 @@ const enviarDatos = () => {
         console.log('datas de respuesta', response.data)
 
         emit('event-nuevo-estudiante')
+        emit('cerrar-formulario')
       })
       .catch((err) => {
         console.log('ocurrio un error')

@@ -19,6 +19,25 @@ const verFormulario = ref(false)
 const mostrarFormulario = () => {
   verFormulario.value = !verFormulario.value
 }
+
+/* ----------------------------------------------- eliminar estudiante ---------------------------------------------- */
+const eliminarStd = (id: string) => {
+  axios
+    .delete(`http://127.0.0.1:3005/estudiantes/${id}`)
+    .then(() => {
+      listarEstudiante()
+    })
+    .catch((error) => console.log(error))
+}
+
+const verDetalleDiv = ref(false)
+const estudianteDetalle = ref(null)
+const verDetalle = (id: string) => {
+  axios.get(`http://127.0.0.1:3005/estudiantes/${id}`).then((response) => {
+    estudianteDetalle.value = response.data
+    verDetalleDiv.value = true
+  })
+}
 </script>
 
 <template>
@@ -33,6 +52,7 @@ const mostrarFormulario = () => {
     v-if="verFormulario"
     :valorQueRecibo="verFormulario"
     apellido-que-recibo="valor a enviar en string"
+    @cerrar-formulario="() => (verFormulario = false)"
     @event-nuevo-estudiante="listarEstudiante"
   />
 
@@ -53,9 +73,9 @@ const mostrarFormulario = () => {
       <tr v-for="(est, index) in listaEstudiantes" :key="est._id">
         <td>{{ index + 1 }}</td>
         <td>
-          <button>editar</button>
-          <button>borrar</button>
-          <button>ver detalle</button>
+          <!-- <button>editar</button> -->
+          <button @click="eliminarStd(est._id)">Eliminar</button>
+          <button @click="verDetalle(est._id)">ver detalle</button>
         </td>
         <td>{{ est.nombre }}</td>
         <td>{{ est.email }}</td>
@@ -66,6 +86,20 @@ const mostrarFormulario = () => {
     </table>
   </div>
   <div v-else>cargando datos ....</div>
+
+  <hr />
+  <div v-if="estudianteDetalle != null" class="block">
+    <!-- {{ estudianteDetalle }} -->
+    <p>nombre: {{ estudianteDetalle.nombre }}</p>
+    <p>apellido paterno: {{ estudianteDetalle.apellidoPaterno }}</p>
+    <p>apellido materno: {{ estudianteDetalle.apellidoMaterno }}</p>
+    <p>sexo: {{ estudianteDetalle.sexo }}</p>
+    <p>email: {{ estudianteDetalle.email }}</p>
+    <p>telefono: {{ estudianteDetalle.nroCelular }}</p>
+    <p>direccion: {{ estudianteDetalle.direccion }}</p>
+    <p>fecha de nacimiento: {{ estudianteDetalle.fechaNacimiento }}</p>
+    <p>tiene whatsapp: {{ estudianteDetalle.tieneWhatsapp }}</p>
+  </div>
 </template>
 
 <style>
