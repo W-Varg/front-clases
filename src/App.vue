@@ -2,6 +2,8 @@
 import { RouterView } from 'vue-router'
 // import HelloWorld from './components/HelloWorld.vue'
 import ListarEstudiantes from './module/estudiantes/ListarEstudiantes.vue'
+// import ListarCursos from './module/estudiantes/ListarEstudiantes.vue'
+// import ListarAsistencias from './module/estudiantes/ListarEstudiantes.vue'
 </script>
 
 <template>
@@ -11,6 +13,8 @@ import ListarEstudiantes from './module/estudiantes/ListarEstudiantes.vue'
       <div class="panel-menu">asdfs</div>
       <div class="panel-data">
         <ListarEstudiantes />
+        <!-- <ListarCursos /> -->
+        <!-- <ListarAsistencias /> -->
       </div>
     </div>
     <div class="panel-derecho"></div>

@@ -5,12 +5,15 @@ import AddEstudiante from './components/AddEstudiante.vue'
 
 const listaEstudiantes = ref([])
 
-// tiene tiempo de retando
-setTimeout(() => {
-  axios.get('http://127.0.0.1:3005/estudiantes').then((response) => {
-    listaEstudiantes.value = response.data // resultado
-  })
-}, 2000)
+const listarEstudiante = () => {
+  // tiene tiempo de retando
+  setTimeout(() => {
+    axios.get('http://127.0.0.1:3005/estudiantes').then((response) => {
+      listaEstudiantes.value = response.data // resultado
+    })
+  }, 100)
+}
+listarEstudiante()
 
 const verFormulario = ref(false)
 const mostrarFormulario = () => {
@@ -25,7 +28,15 @@ const mostrarFormulario = () => {
       {{ verFormulario ? 'ocultar formulario' : 'mostrar formulario' }}
     </button>
   </div>
-  <AddEstudiante v-if="verFormulario" />
+
+  <AddEstudiante
+    v-if="verFormulario"
+    :valorQueRecibo="verFormulario"
+    apellido-que-recibo="valor a enviar en string"
+    @event-nuevo-estudiante="listarEstudiante"
+  />
+
+  ver fomulario valor {{ verFormulario }}
 
   <hr class="linea-divisor" />
   <div v-if="listaEstudiantes.length > 0" class="block">

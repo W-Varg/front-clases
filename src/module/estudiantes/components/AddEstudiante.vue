@@ -1,6 +1,12 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { reactive, defineEmits } from 'vue'
 import axios from 'axios'
+
+const emit = defineEmits(['event-nuevo-estudiante'])
+const props = defineProps({
+  valorQueRecibo: { type: Boolean, required: true },
+  apellidoQueRecibo: { type: String, required: true },
+})
 
 const datosACrear = reactive({
   carnet_identidad: '',
@@ -22,18 +28,25 @@ const enviarDatos = () => {
     axios
       .post('http://127.0.0.1:3005/estudiantes', datosACrear)
       .then((response) => {
+        // operacion exitosa then
         console.log('datas de respuesta', response.data)
-      }) // operacion exitosa then
+
+        emit('event-nuevo-estudiante')
+      })
       .catch((err) => {
         console.log('ocurrio un error')
         console.log(err)
       }) // operacion fallida catch
-  }, 2000)
+  }, 500)
 }
 </script>
 
 <template>
   <h3>Formulario de registro</h3>
+  <br />
+  prop hijo: {{ valorQueRecibo }}, apellido que recibo: {{ apellidoQueRecibo }}
+  <br />
+  <br />
   <!-- v-model -> bindear (enlazar) carnet_identidad -->
   <div>
     <label for="ci_id">Carnet de Indentidad</label>
