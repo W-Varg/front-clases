@@ -2,8 +2,11 @@
 import axios from 'axios'
 import { ref } from 'vue'
 import AddEstudiante from './components/AddEstudiante.vue'
+import EstudianteEditForm from './components/EditEstudianteForm.vue'
 
 const listaEstudiantes = ref([])
+
+const busquedaTexto = ref('')
 
 const listarEstudiante = () => {
   // tiene tiempo de retando
@@ -38,6 +41,16 @@ const verDetalle = (id: string) => {
     verDetalleDiv.value = true
   })
 }
+
+const estudianteSelecionado = ref(null)
+const actualizarStd = (itemStd) => {
+  estudianteSelecionado.value = null
+  estudianteSelecionado.value = itemStd
+}
+
+const methodBuscar = () => {
+  console.log(busquedaTexto.value)
+}
 </script>
 
 <template>
@@ -55,10 +68,21 @@ const verDetalle = (id: string) => {
     @cerrar-formulario="() => (verFormulario = false)"
     @event-nuevo-estudiante="listarEstudiante"
   />
+  <div v-if="estudianteSelecionado != null">
+    <EstudianteEditForm
+      :selecionado="estudianteSelecionado"
+      @cerrar-formulario="estudianteSelecionado = null"
+      @event-edit-estudiante="listarEstudiante"
+    />
+  </div>
 
   ver fomulario valor {{ verFormulario }}
 
   <hr class="linea-divisor" />
+
+  <input type="text" v-model="busquedaTexto" />
+  <button @click="methodBuscar">buscar</button>
+
   <div v-if="listaEstudiantes.length > 0" class="block">
     <table border="1">
       <tr>
@@ -70,18 +94,18 @@ const verDetalle = (id: string) => {
         <td>direccion</td>
         <td>fecha Nacimient</td>
       </tr>
-      <tr v-for="(est, index) in listaEstudiantes" :key="est._id">
+      <tr v-for="(item, index) in listaEstudiantes" :key="item._id">
         <td>{{ index + 1 }}</td>
         <td>
-          <!-- <button>editar</button> -->
-          <button @click="eliminarStd(est._id)">Eliminar</button>
-          <button @click="verDetalle(est._id)">ver detalle</button>
+          <button @click="actualizarStd(item)">Actualizar</button>
+          <button @click="eliminarStd(item._id)">Eliminar</button>
+          <button @click="verDetalle(item._id)">ver detalle</button>
         </td>
-        <td>{{ est.nombre }}</td>
-        <td>{{ est.email }}</td>
-        <td>{{ est.nroCelular }}</td>
-        <td>{{ est.direccion }}</td>
-        <td>{{ est.fechaNacimiento }}</td>
+        <td>{{ item.nombre }}</td>
+        <td>{{ item.email }}</td>
+        <td>{{ item.nroCelular }}</td>
+        <td>{{ item.direccion }}</td>
+        <td>{{ item.fechaNacimiento }}</td>
       </tr>
     </table>
   </div>
