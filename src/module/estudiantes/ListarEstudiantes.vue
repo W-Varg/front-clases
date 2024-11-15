@@ -7,6 +7,7 @@ import EstudianteEditForm from './components/EditEstudianteForm.vue'
 const listaEstudiantes = ref([])
 
 const busquedaTexto = ref('')
+const busquedaCI = ref('')
 
 const listarEstudiante = () => {
   // tiene tiempo de retando
@@ -49,7 +50,17 @@ const actualizarStd = (itemStd) => {
 }
 
 const methodBuscar = () => {
-  console.log(busquedaTexto.value)
+  let query = ''
+  if (busquedaTexto.value && busquedaTexto.value.length >= 1) {
+    query = `?texto=${busquedaTexto.value}`
+  }
+  if (busquedaCI.value && busquedaCI.value.length >= 1) {
+    query = `?numero-documento=${busquedaCI.value}`
+  }
+
+  axios.get(`http://localhost:3005/estudiantes/search/${query}`).then((response) => {
+    listaEstudiantes.value = response.data
+  })
 }
 </script>
 
@@ -80,7 +91,8 @@ const methodBuscar = () => {
 
   <hr class="linea-divisor" />
 
-  <input type="text" v-model="busquedaTexto" />
+  <input type="text" placeholder="ci" v-model="busquedaCI" />
+  <input type="text" placeholder="nombre o apellido" v-model="busquedaTexto" />
   <button @click="methodBuscar">buscar</button>
 
   <div v-if="listaEstudiantes.length > 0" class="block">
@@ -88,6 +100,7 @@ const methodBuscar = () => {
       <tr>
         <td>nro</td>
         <td>acciones</td>
+        <td>ci</td>
         <td>nombre</td>
         <td>email</td>
         <td>telefono</td>
@@ -101,6 +114,7 @@ const methodBuscar = () => {
           <button @click="eliminarStd(item._id)">Eliminar</button>
           <button @click="verDetalle(item._id)">ver detalle</button>
         </td>
+        <td>{{ item.carnetIdentidad }}</td>
         <td>{{ item.nombre }}</td>
         <td>{{ item.email }}</td>
         <td>{{ item.nroCelular }}</td>
