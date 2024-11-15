@@ -1,6 +1,12 @@
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
+    <h1>pagina de acerca de mi</h1>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium architecto expedita sit
+      ipsa dignissimos labore rem, eveniet dolor iusto repudiandae voluptatum soluta rerum optio,
+      quas quasi id molestiae at provident!
+    </p>
+    <h3>preguntas frecuentes</h3>
   </div>
 </template>
 

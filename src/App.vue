@@ -1,18 +1,24 @@
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
+import { RouterView } from 'vue-router' //
+import Header from './layout/Header.vue'
+import MenuIzq from './layout/MenuIzq.vue'
 // import HelloWorld from './components/HelloWorld.vue'
-import ListarEstudiantes from './module/estudiantes/ListarEstudiantes.vue'
+// import ListarEstudiantes from './module/estudiantes/ListarEstudiantes.vue'
 // import ListarCursos from './module/estudiantes/ListarEstudiantes.vue'
 // import ListarAsistencias from './module/estudiantes/ListarEstudiantes.vue'
 </script>
 
 <template>
   <div class="w-full">
-    <header class="header">header</header>
+    <header class="header">
+      <Header></Header>
+    </header>
     <div class="contenido">
-      <div class="panel-menu">asdfs</div>
+      <div class="panel-menu">
+        <MenuIzq />
+      </div>
       <div class="panel-data">
-        <ListarEstudiantes />
+        <RouterView> </RouterView>
         <!-- <ListarCursos /> -->
         <!-- <ListarAsistencias /> -->
       </div>
@@ -39,12 +45,12 @@ import ListarEstudiantes from './module/estudiantes/ListarEstudiantes.vue'
   width: 100%;
 }
 .header {
-  /* background-color: rgb(123, 231, 123); */
+  background-color: rgb(123, 231, 123);
   height: 50px;
   width: 100%;
 }
 .panel-menu {
-  /* background-color: aqua; */
+  background-color: rgb(56, 67, 67);
   height: 80vh;
   width: 20%;
 }
@@ -59,6 +65,6 @@ import ListarEstudiantes from './module/estudiantes/ListarEstudiantes.vue'
 }
 
 footer {
-  /* background-color: slateblue; */
+  background-color: slateblue;
 }
 </style>
