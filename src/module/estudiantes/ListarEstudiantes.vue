@@ -3,6 +3,9 @@ import axios from 'axios'
 import { ref } from 'vue'
 import AddEstudiante from './components/AddEstudiante.vue'
 import EstudianteEditForm from './components/EditEstudianteForm.vue'
+import ButtonBtn from 'primevue/button'
+import DataTable from 'primevue/datatable'
+import Column from 'primevue/column'
 
 const listaEstudiantes = ref([])
 
@@ -20,8 +23,12 @@ const listarEstudiante = () => {
 listarEstudiante()
 
 const verFormulario = ref(false)
+const refAddEstudiante = ref()
 const mostrarFormulario = () => {
   verFormulario.value = !verFormulario.value
+  if (verFormulario.value === true) {
+    refAddEstudiante.value.abrirDialog()
+  }
 }
 
 /* ----------------------------------------------- eliminar estudiante ---------------------------------------------- */
@@ -67,15 +74,17 @@ const methodBuscar = () => {
 <template>
   <h3>listado de estudiantes</h3>
   <div class="lado-derecho">
-    <button @click="mostrarFormulario">
+    <!-- <button @click="mostrarFormulario">
       {{ verFormulario ? 'ocultar formulario' : 'mostrar formulario' }}
-    </button>
+    </button> -->
+    <ButtonBtn
+      :label="verFormulario ? 'ocultar formulario' : 'mostrar formulario'"
+      @click="mostrarFormulario"
+    />
   </div>
 
   <AddEstudiante
-    v-if="verFormulario"
-    :valorQueRecibo="verFormulario"
-    apellido-que-recibo="valor a enviar en string"
+    ref="refAddEstudiante"
     @cerrar-formulario="() => (verFormulario = false)"
     @event-nuevo-estudiante="listarEstudiante"
   />
@@ -96,7 +105,7 @@ const methodBuscar = () => {
   <button @click="methodBuscar">buscar</button>
 
   <div v-if="listaEstudiantes.length > 0" class="block">
-    <table border="1">
+    <!-- <table border="1">
       <tr>
         <td>nro</td>
         <td>acciones</td>
@@ -121,7 +130,21 @@ const methodBuscar = () => {
         <td>{{ item.direccion }}</td>
         <td>{{ item.fechaNacimiento }}</td>
       </tr>
-    </table>
+    </table> -->
+    <div class="card">
+      <DataTable
+        :value="listaEstudiantes"
+        showGridlines
+        paginator
+        :rows="2"
+        :rowsPerPageOptions="[2, 5, 10, 20, 50, 100]"
+      >
+        <Column field="carnetIdentidad" header="Cédula de identidad"></Column>
+        <Column field="nombre" sortable header="Nombre"></Column>
+        <Column field="nroCelular" :sortable="true" header="Telefono Celular"></Column>
+        <Column field="email" header="Correo Electronico"></Column>
+      </DataTable>
+    </div>
   </div>
   <div v-else>cargando datos ....</div>
 
