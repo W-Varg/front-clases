@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { reactive, defineEmits } from 'vue'
+// import CInput from '../../../components/CInput.vue'
 import axios from 'axios'
 
 const emit = defineEmits(['event-nuevo-estudiante', 'cerrar-formulario'])
@@ -48,6 +49,12 @@ const enviarDatos = () => {
   prop hijo: {{ valorQueRecibo }}, apellido que recibo: {{ apellidoQueRecibo }}
   <br />
   <br />
+
+  <!-- <CInput label="carnet identidad" />
+  <CInput label="segundo nombre" />
+  <CInput label="apellido paterno" :cargando="false" placeholder="debe introducir un apellido" />
+  <CInput label="apellido materno" /> -->
+
   <!-- v-model -> bindear (enlazar) carnet_identidad -->
   <div>
     <label for="ci_id">Carnet de Indentidad</label>
