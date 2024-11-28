@@ -5,6 +5,124 @@ import ToolingIcon from './icons/IconTooling.vue'
 import EcosystemIcon from './icons/IconEcosystem.vue'
 import CommunityIcon from './icons/IconCommunity.vue'
 import SupportIcon from './icons/IconSupport.vue'
+import { ref, onBeforeMount, onMounted } from 'vue'
+import axios from 'axios'
+import Chart from 'primevue/chart'
+import Button from 'primevue/button'
+
+const chartData = ref()
+const chartOptions = ref()
+
+const setChartData = () => {
+  return {
+    labels: ['Q1', 'Q2', 'Q3', 'Q4', 'Q5', 'Q6', 'Q7'], // 0 1 2 3 4
+    datasets: [
+      {
+        label: 'Sales',
+        data: [540, 325, 702, 620, 950, 750],
+        backgroundColor: [
+          'rgba(249, 115, 22, 0.2)',
+          'rgba(6, 182, 212, 0.2)',
+          'rgb(107, 114, 128, 0.2)',
+          'rgba(139, 92, 246 0.2)',
+        ],
+        borderColor: [
+          'rgb(249, 115, 22)',
+          'rgb(6, 182, 212)',
+          'rgb(107, 114, 128)',
+          'rgb(139, 92, 246)',
+        ],
+        borderWidth: 1,
+      },
+    ],
+  }
+}
+const setChartOptions = () => {
+  const documentStyle = getComputedStyle(document.documentElement)
+  const textColor = documentStyle.getPropertyValue('--p-text-color')
+  const textColorSecondary = documentStyle.getPropertyValue('--p-text-muted-color')
+  const surfaceBorder = documentStyle.getPropertyValue('--p-content-border-color')
+
+  return {
+    plugins: {
+      legend: {
+        labels: {
+          color: textColor,
+        },
+      },
+    },
+    scales: {
+      x: {
+        ticks: {
+          color: textColorSecondary,
+        },
+        grid: {
+          color: surfaceBorder,
+        },
+      },
+      y: {
+        beginAtZero: true,
+        ticks: {
+          color: textColorSecondary,
+        },
+        grid: {
+          color: surfaceBorder,
+        },
+      },
+    },
+  }
+}
+
+const dataDeServer = ref()
+
+onBeforeMount(() => {
+  axios.post('http://127.0.0.1:3005/report/estudiantes/edad', {}).then((response) => {
+    dataDeServer.value = response.data
+    chartData.value = {
+      labels: dataDeServer.value?.labels, // 0 1 2 3 4
+      datasets: [
+        {
+          label: 'Sales',
+          data: dataDeServer.value?.data,
+          backgroundColor: [
+            'rgba(249, 115, 22, 0.2)',
+            'rgba(6, 182, 212, 0.2)',
+            'rgb(107, 114, 128, 0.2)',
+            'rgba(139, 92, 246 0.2)',
+          ],
+          borderColor: [
+            'rgb(249, 115, 22)',
+            'rgb(6, 182, 212)',
+            'rgb(107, 114, 128)',
+            'rgb(139, 92, 246)',
+          ],
+          borderWidth: 1,
+        },
+      ],
+    }
+  })
+})
+
+const descargar = () => {
+  const cabecera = dataDeServer.value.labels
+  const filas = dataDeServer.value.data
+
+  const csvContent = [cabecera, filas].join('\n')
+
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
+  const enlaceDescarga = document.createElement('a')
+  enlaceDescarga.href = URL.createObjectURL(blob)
+  document.body.appendChild(enlaceDescarga)
+  enlaceDescarga.download = 'reporte.csv'
+  enlaceDescarga.click()
+  document.body.removeChild(enlaceDescarga) //
+}
+
+onMounted(() => {
+  console.log('onMounted despues')
+  // chartData.value = setChartData()
+  chartOptions.value = setChartOptions()
+})
 </script>
 
 <template>
@@ -18,6 +136,11 @@ import SupportIcon from './icons/IconSupport.vue'
     <a href="https://vuejs.org/" target="_blank" rel="noopener">official documentation</a>
     provides you with all information you need to get started.
   </WelcomeItem>
+
+  <Button label="Descargar" icon="pi pi-download" severity="success" @click="descargar"></Button>
+  <div class="card">
+    <Chart type="pie" :data="chartData" :options="chartOptions" />
+  </div>
 
   <WelcomeItem>
     <template #icon>
