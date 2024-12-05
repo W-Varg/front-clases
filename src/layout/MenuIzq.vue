@@ -12,7 +12,7 @@ const goRoute = (route: string) => {
     <button @click="goRoute('/')">home</button>
     <button @click="$router.push('/acerca-de-mi')">acerca de mi</button>
     <button @click="goRoute('/list-estudiantes')">Estudiantes</button>
-    <a href="/">asistencia</a>
+    <button @click="goRoute('/asistencia')">asistencia</button>
   </div>
 </template>
 

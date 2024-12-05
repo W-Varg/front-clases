@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import AboutView from '../views/AboutView.vue'
 import ListEstudiantes from '../module/estudiantes/ListarEstudiantes.vue'
+import ListarAsistencias from '../module/asistencia/ListarAsistencias.vue'
 
 export const routes = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -19,6 +20,11 @@ export const routes = createRouter({
       path: '/list-estudiantes',
       name: 'estudiantes',
       component: ListEstudiantes,
+    },
+    {
+      path: '/asistencia',
+      name: 'asistencia',
+      component: ListarAsistencias,
     },
   ],
 })
