@@ -8,9 +8,21 @@ import axios from 'axios'
 const asistenciasData = ref([])
 
 const listarAsistencias = () => {
-  axios.get('http://localhost:3005/asistencias/listar').then((response) => {
-    asistenciasData.value = response.data // resultado
-  })
+  const textoPlano = localStorage.getItem('user_sesion_data')
+  const userDataJson = JSON.parse(textoPlano)
+  console.log(userDataJson)
+
+  axios
+    .get('http://localhost:3005/asistencias/listar', {
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        Authorization: `Bearer ${userDataJson.token}`,
+      },
+    })
+    .then((response) => {
+      asistenciasData.value = response.data // resultado
+    })
 }
 
 onMounted(() => {

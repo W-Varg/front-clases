@@ -1,11 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import AboutView from '../views/AboutView.vue'
 import ListEstudiantes from '../module/estudiantes/ListarEstudiantes.vue'
 import ListarAsistencias from '../module/asistencia/ListarAsistencias.vue'
 
 export const routes = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('../auth/Ingresar.vue'), // solo cuando se llama
+    },
     {
       path: '/',
       name: 'home', // identifador de la ruta
@@ -14,7 +18,7 @@ export const routes = createRouter({
     {
       path: '/acerca-de-mi',
       name: 'about-me',
-      component: AboutView,
+      component: () => import('../views/AboutView.vue'), // AboutView,
     },
     {
       path: '/list-estudiantes',
