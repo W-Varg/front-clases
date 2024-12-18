@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
-import { Form } from '@primevue/forms'
+import { Form, type FormSubmitEvent } from '@primevue/forms'
 import { zodResolver } from '@primevue/forms/resolvers/zod'
 import { useToast } from 'primevue/usetoast'
 import Message from 'primevue/message'
@@ -30,7 +30,7 @@ const resolver = ref(
   ),
 )
 
-const onFormSubmit = ({ valid }) => {
+const onFormSubmit = ({ valid }: FormSubmitEvent) => {
   if (valid) {
     axios
       .post('http://127.0.0.1:3005/usuarios/login', datosAEnviar)

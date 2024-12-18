@@ -70,13 +70,13 @@ const abrirDialog = () => {
 const confirm = useConfirm()
 
 const datosACrear = reactive({
-  fechaClase: null,
-  semestre: 0,
-  docenteNombre: null,
+  fechaClase: undefined,
+  semestre: undefined,
+  docenteNombre: undefined,
   /* ------------------------------------------------------------------------------------------------------------------ */
 
-  materiaId: null,
-  estudianteId: null,
+  materiaId: undefined,
+  estudianteId: undefined,
 })
 
 const enviarDatos = () => {

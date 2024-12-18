@@ -9,7 +9,7 @@ const asistenciasData = ref([])
 
 const listarAsistencias = () => {
   const textoPlano = localStorage.getItem('user_sesion_data')
-  const userDataJson = JSON.parse(textoPlano)
+  const userDataJson = JSON.parse(`${textoPlano}`)
   console.log(userDataJson)
 
   axios

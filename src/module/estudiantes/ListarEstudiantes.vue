@@ -32,29 +32,29 @@ const mostrarFormulario = () => {
 }
 
 /* ----------------------------------------------- eliminar estudiante ---------------------------------------------- */
-const eliminarStd = (id: string) => {
-  axios
-    .delete(`http://127.0.0.1:3005/estudiantes/${id}`)
-    .then(() => {
-      listarEstudiante()
-    })
-    .catch((error) => console.log(error))
-}
+// const eliminarStd = (id: string) => {
+//   axios
+//     .delete(`http://127.0.0.1:3005/estudiantes/${id}`)
+//     .then(() => {
+//       listarEstudiante()
+//     })
+//     .catch((error) => console.log(error))
+// }
 
-const verDetalleDiv = ref(false)
-const estudianteDetalle = ref(null)
-const verDetalle = (id: string) => {
-  axios.get(`http://127.0.0.1:3005/estudiantes/${id}`).then((response) => {
-    estudianteDetalle.value = response.data
-    verDetalleDiv.value = true
-  })
-}
+// const verDetalleDiv = ref(false)
+const estudianteDetalle = ref()
+// const verDetalle = (id: string) => {
+//   axios.get(`http://127.0.0.1:3005/estudiantes/${id}`).then((response) => {
+//     estudianteDetalle.value = response.data
+//     verDetalleDiv.value = true
+//   })
+// }
 
 const estudianteSelecionado = ref(null)
-const actualizarStd = (itemStd) => {
-  estudianteSelecionado.value = null
-  estudianteSelecionado.value = itemStd
-}
+// const actualizarStd = (itemStd) => {
+//   estudianteSelecionado.value = null
+//   estudianteSelecionado.value = itemStd
+// }
 
 const methodBuscar = () => {
   let query = ''

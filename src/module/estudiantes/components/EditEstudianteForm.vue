@@ -39,7 +39,7 @@ watch(
   },
 )
 
-const enviarDatos = (id) => {
+const enviarDatos = (id: number) => {
   // 2 segundos
   axios
     .patch(`http://127.0.0.1:3005/estudiantes/${id}`, datosACrear)
